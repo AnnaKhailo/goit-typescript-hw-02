@@ -1,12 +1,23 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { HiSearch } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
-export default function SearchBar({ onSearch }) {
+type SearchProps = {
+  onSearch: (query: string) => void;
+};
+
+type InitialValues = {
+  query: string;
+};
+
+const SearchBar: React.FC<SearchProps> = ({ onSearch }) => {
   const notify = () => toast.error("Please fill in the search field!");
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (
+    values: InitialValues,
+    actions: FormikHelpers<InitialValues>
+  ) => {
     values.query.trim() === "" && notify();
     onSearch(values.query);
     actions.resetForm();
@@ -32,4 +43,6 @@ export default function SearchBar({ onSearch }) {
       <Toaster />
     </header>
   );
-}
+};
+
+export default SearchBar;

@@ -8,19 +8,19 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
 
-import { getImages } from "../../images-api";
+import { getImages, Image } from "../../images-api";
 import css from "./App.module.css";
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  const [noImagesByQuery, setNoImagesByQuery] = useState(false);
+const App: React.FC = () => {
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [noImagesByQuery, setNoImagesByQuery] = useState<boolean>(false);
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -46,7 +46,7 @@ function App() {
     fetchImages();
   }, [page, searchQuery]);
 
-  const handleSearch = async (topic) => {
+  const handleSearch = async (topic: string) => {
     setSearchQuery(topic);
     setPage(1);
     setImages([]);
@@ -58,7 +58,7 @@ function App() {
     setPage(page + 1);
   };
 
-  const handleImgClick = (image) => {
+  const handleImgClick = (image: Image) => {
     setSelectedImage(image);
     setIsModalOpen(true);
   };
@@ -100,6 +100,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
